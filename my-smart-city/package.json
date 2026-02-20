@@ -11,9 +11,12 @@
     "@antv/l7-maps": "^2.14.0",
     "@mapbox/mapbox-gl-directions": "^4.3.1",
     "axios": "^1.13.5",
+    "cors": "^2.8.6",
     "echarts": "^5.4.3",
     "element-ui": "^2.15.14",
     "mapbox-gl": "~2.15.0",
+    "mysql2": "^3.17.3",
+    "sequelize": "^6.37.7",
     "vue": "^2.7.7",
     "vue-echarts": "^6.6.0",
     "vue-router": "^3.6.5"

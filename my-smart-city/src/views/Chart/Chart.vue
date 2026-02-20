@@ -6,7 +6,7 @@
                     武汉各区今日出行人口统计
                 </template>
                 <div class="H100">
-                    <v-chart :option="outDoorOption" class="W100 H100" />
+                    <v-chart :option="peopleOutdoorOption" class="W100 H100" />
                 </div>
             </Panel>
             <Panel>
@@ -65,9 +65,9 @@
 <script>
 import Panel from './components/Panel.vue';
 import PanelSmall from './components/PanelSmall.vue';
-import { usePeopleOutDoor } from '../../Hooks/peopleOutDoor';
-import { useBusOnline } from '../../Hooks/busOnline';
-import { usePopulationDistribution } from '../../Hooks/populationDistribution';
+import { useBusOnline } from '../../hooks/busOnline';
+import { usePeopleOutdoor } from '../../hooks/peopleOutdoor';
+import { usePopulationDistribution } from '../../hooks/populationDistribution';
 
 export default {
     name: 'Chart',
@@ -77,19 +77,40 @@ export default {
     },
 
     data() {
-        const { option: outDoorOption } = usePeopleOutDoor();
         const { option: busOnlineOption } = useBusOnline();
+        const { option: peopleOutdoorOption } = usePeopleOutdoor();
         const { option: populationDistributionOption } = usePopulationDistribution();
         return {
-            outDoorOption,
             busOnlineOption,
+            peopleOutdoorOption,
             populationDistributionOption,
             hospitalData: null, // 用于存储医院数据
             universityData: null, // 用于存储高校数据
         };
     },
 
-    mounted() {
+    async mounted() {
+        const 
+        [
+            busOnlineResult,
+            peopleOutdoorResult,
+            populationDistributionResult
+        ] = await Promise.allSettled([
+            useBusOnline(),
+            usePeopleOutdoor(),
+            usePopulationDistribution(),
+        ]);
+
+        if (busOnlineResult.status === 'fulfilled') {
+            this.busOnlineOption = busOnlineResult.value.option;
+        };
+        if (peopleOutdoorResult.status === 'fulfilled') {
+            this.peopleOutdoorOption = peopleOutdoorResult.value.option;
+        };
+        if (populationDistributionResult.status === 'fulfilled') {
+            this.populationDistributionOption = populationDistributionResult.value.option;
+        }
+
         this.loadHospitalData();
         this.loadUniversityData();
     },

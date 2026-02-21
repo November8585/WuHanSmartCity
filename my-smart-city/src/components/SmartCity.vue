@@ -6,7 +6,7 @@
 
 <script>
 import { CityBuildingLayer, LineLayer, LayerSwitch } from '@antv/l7';
-import axios from 'axios';
+import { fetchWithCache } from '../utils/cache';
 
 export default {
     name: 'SmartCity',
@@ -67,15 +67,11 @@ export default {
 
         // 获取建筑数据
         async fetchBuildingData() {
-            const url = this.apiURL('wuhan_buildings');
-            const response = await axios.get(url);
-            return response.data;
+            return fetchWithCache("buildings", "/json/wuhan_buildings.json");
         },
         // 获取道路数据
         async fetchRoadData() {
-            const url = this.apiURL('wuhan_roads');
-            const response = await axios.get(url);
-            return response.data;
+            return fetchWithCache("roads", "/json/wuhan_roads.json");
         },
 
         // 创建建筑图层
@@ -124,10 +120,6 @@ export default {
                     trailLength: 2,
                 });
             return wuhanRoadLayer;
-        },
-
-        apiURL(name) {
-            return `/json/${name}.json`;
         },
     },
 };

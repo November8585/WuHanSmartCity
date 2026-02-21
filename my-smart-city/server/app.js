@@ -15,5 +15,5 @@ app.use("/api/population_distribution", populationDistributionRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on heep://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -1,5 +1,7 @@
 <template>
-
+    <div class="navigationControl" @click="toggleNavigation">
+        {{ navigationIcon }}
+    </div>
 </template>
 
 <script>
@@ -12,6 +14,9 @@ export default {
         return {
             map: null,
             scene: null,
+            navigationVisible: true,
+            navigationIcon: '<',
+            navigation: null,
         };
     },
 
@@ -107,16 +112,45 @@ export default {
             // 导航插件
             const token = this.$root.$token;
             if (token) {
-                const directions = new MapboxDirections({
+                this.navigation = new MapboxDirections({
                     accessToken: token,
                 });
-                this.map.addControl(directions, 'top-left');
+                this.map.addControl(this.navigation, 'top-left');
             } else {
                 console.warn('token错误');
             };
+        },
+
+        toggleNavigation() {
+            if (!this.navigation) {
+                return;
+            };
+            if (this.navigationVisible) {
+                this.map.removeControl(this.navigation);
+                this.navigationIcon = '>';
+            } else {
+                this.map.addControl(this.navigation, "top-left");
+                this.navigationIcon = '<';
+            };
+            this.navigationVisible = !this.navigationVisible;
         },
     },
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.navigationControl {
+    position: absolute;
+    left: 0;
+    top: 140px;
+    width: 18px;
+    height: 27px;
+    background-color: #fff;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    padding-left: 9px;
+    z-index: 10;
+};
+</style>

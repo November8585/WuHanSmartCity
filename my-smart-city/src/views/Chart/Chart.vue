@@ -66,7 +66,7 @@
 import Panel from './components/Panel.vue';
 import PanelSmall from './components/PanelSmall.vue';
 import { useBusOnline } from '../../hooks/busOnline';
-import { usePeopleOutdoor } from '../../hooks/peopleOutdoor';
+import { usePeopleOutdoor } from '../../hooks/peopleOutDoor';
 import { usePopulationDistribution } from '../../hooks/populationDistribution';
 
 export default {

@@ -119,7 +119,7 @@ export default {
         async loadHospitalData() {
             try {
                 // 使用this.$utils.getFileJson获取数据
-                const hospitalData = await this.$utils.getFileJson(this.$baseUrl + 'json/virtualData/sanJiaHospitals.json');
+                const hospitalData = await this.$utils.getFileJson(this.$baseUrl + 'json/virtualData/sanjiaHospitals.json');
                 this.hospitalData = hospitalData; // 将数据存储在组件的data中，以便后续使用
             } catch (error) {
                 console.error('加载医院数据失败:', error);
